@@ -18,8 +18,8 @@ const App = () => {
   const [index, setIndex] = React.useState(0);
 
   const [routes] = React.useState([
-    {key: 'wishes', title: 'Wishes'},
-    {key: 'setting', title: 'Setting'},
+    { key: 'wishes', title: 'Wishes', icon: 'account-heart-outline' },
+    { key: 'setting', title: 'Setting', icon: 'account-settings' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
