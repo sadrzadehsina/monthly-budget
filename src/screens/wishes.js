@@ -1,43 +1,56 @@
 import * as React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {View, StyleSheet} from 'react-native';
 import {Text, List, FAB} from 'react-native-paper';
-import {AddWishDialog} from '../components';
+import {AddWishDialog, WishItem} from '../components';
 
 export const Wishes = () => {
+
   const [visible, setVisible] = React.useState(false);
+  const [items, setItems] = React.useState([]);
 
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
-  const add = ({title, budget}) => {
-    console.log(title, budget);
+  const updateItems = async() => {
+
+    const wishes = await AsyncStorage.getItem('wishes');
+    if (wishes) setItems(JSON.parse(wishes));
+
   };
+
+  const add = async ({title, budget}) => {
+    // save to async storage
+    const wish = { title, budget };
+    const newWishes = [ ...items, wish ];
+    await AsyncStorage.setItem('wishes', JSON.stringify(newWishes));
+    updateItems();
+  };
+
+  React.useEffect(() => {
+
+    updateItems();
+
+  }, []);
 
   return (
     <View style={styles.root}>
       <List.Section>
-				<List.Subheader style={list.header}>Wish List</List.Subheader>
-        <List.Item
-          title="Buy a Car"
-          description="I want to buy a car"
-          style={list.item}
-          titleStyle={list.title}
-          right={() => <View style={list.budget}><Text style={list.budgetText}>5k$</Text></View>}
-        />
-        <List.Item
-          title="Buy a Car"
-          description="I want to buy a car"
-          titleStyle={list.title}
-          style={list.item}
-					right={() => <View style={list.budget}><Text style={list.budgetText}>5k$</Text></View>}
-        />
-        <List.Item
-          title="Buy a Car"
-          description="I want to buy a car"
-          titleStyle={list.title}
-          style={list.item}
-					right={() => <View style={list.budget}><Text style={list.budgetText}>5k$</Text></View>}
-        />
+        <List.Subheader style={list.header}>Wish List</List.Subheader>
+        {
+          (items.length === 0) ? (
+            <List.Item title='No Available Wish' />
+          ) : (
+            items.map(item => (
+              <WishItem 
+                key={item.title.toLowerCase().split(' ').join('-')}
+                title={item.title}
+                description={item.description}
+                budget={item.budget}
+              />
+            ))
+          )
+        }
       </List.Section>
       <FAB style={styles.fab} small icon="plus" onPress={() => showDialog()} />
       <AddWishDialog hideDialog={hideDialog} add={add} visible={visible} />
@@ -58,24 +71,7 @@ const styles = StyleSheet.create({
 });
 
 const list = StyleSheet.create({
-	header: {
-		fontSize: 24,
-	},
-  item: {
-    backgroundColor: '#EEEEEE',
-    marginVertical: 5,
-  },
-  title: {
+  header: {
     fontSize: 24,
-    fontWeight: 'bold',
   },
-	budget: {
-		flex: 1,
-		justifyContent: 'center',
-		alignContent: 'flex-end',
-		alignItems: 'flex-end'
-	},
-	budgetText: {
-		fontSize: 24,
-	}
 });
