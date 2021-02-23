@@ -10,3 +10,5 @@ const theme = {
     error: '#f13a59',
   },
 };
+
+export { theme };

@@ -7,36 +7,22 @@
  */
 
 import React from 'react';
-// import {View, StyleSheet} from 'react-native';
-// import {
-//   BottomNavigation,
-// } from 'react-native-paper';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import { HomeScreen } from './src/screens';
 
-// import { Wishes, Setting } from './src/screens';
-
-import AppContainer from './src';
+const Stack = createStackNavigator();
 
 const App = () => {
-  // const [index, setIndex] = React.useState(0);
-
-  // const [routes] = React.useState([
-  //   { key: 'wishes', title: 'Wishes', icon: 'account-heart-outline' },
-  //   { key: 'setting', title: 'Setting', icon: 'account-settings' },
-  // ]);
-
-  // const renderScene = BottomNavigation.SceneMap({
-  //   wishes: Wishes,
-  //   setting: Setting,
-  // });
-
   return (
-    <AppContainer />
-    // <BottomNavigation
-    //   navigationState={{index, routes}}
-    //   onIndexChange={setIndex}
-    //   renderScene={renderScene}
-    // />
-  );
+    <NavigationContainer>
+
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name='Home' component={HomeScreen}/>
+      </Stack.Navigator>
+      
+    </NavigationContainer>
+  )
 };
 
 export default App;

@@ -3,27 +3,28 @@ import React, { memo } from 'react';
 import {
 	ImageBackground,
 	StyleSheet,
-	KeyboardAvoidView,
+	KeyboardAvoidingView,
 } from 'react-native';
 
-const Background = ({ children }) => {
+const Background = ({ children }) => (
 	
 	<ImageBackground
 		source={require('../assets/background_dot.png')}
 		resizeMode='repeat'
 		style={styles.background}
 	>
-		<KeyboardAvoidView style={styles.container} behavior="padding">
+		<KeyboardAvoidingView style={styles.container} behavior="padding">
 			{children}
-		</KeyboardAvoidView>
+		</KeyboardAvoidingView>
 	</ImageBackground>
 
-};
+);
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: '100%',
+    backgroundColor: 'white'
   },
   container: {
     flex: 1,
@@ -36,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(Background);
+export { Background };
