@@ -1,6 +1,3 @@
-import * as React from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {View, StyleSheet} from 'react-native';
 import {Text, List, FAB} from 'react-native-paper';
 import {AddWishDialog, WishItem} from '../components';
 

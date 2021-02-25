@@ -1,4 +1,3 @@
-// export * from './wishes';
-// export * from './setting';
-export * from './home-screen';
-export * from './login-screen';
+export * from './login';
+export * from './home';
+export * from './settings';

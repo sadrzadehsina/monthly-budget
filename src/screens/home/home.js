@@ -1,9 +1,14 @@
 import React, { memo } from 'react';
-import { Background } from '../components/background';
-import { Logo } from '../components/logo';
-import { Header } from '../components/header';
-import { Button } from '../components/button';
-import { Paragraph } from '../components/paragraph';
+
+import {
+  Background,
+  Logo,
+  Header,
+  Button,
+  Paragraph,
+} from '@Components';
+
+import { Text } from 'react-native';
 
 const HomeScreen = ({ navigation }) => (
   <Background>

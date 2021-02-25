@@ -9,7 +9,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import { HomeScreen, LoginScreen } from './src/screens';
+import { HomeScreen, LoginScreen } from '@Screens';
 
 const Stack = createStackNavigator();
 

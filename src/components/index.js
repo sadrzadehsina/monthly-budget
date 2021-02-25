@@ -7,3 +7,4 @@ export * from './button';
 export * from './logo';
 export * from './paragraph';
 export * from './text-input';
+export * from './header';

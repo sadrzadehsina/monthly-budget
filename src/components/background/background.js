@@ -9,7 +9,7 @@ import {
 const Background = ({ children }) => (
 	
 	<ImageBackground
-		source={require('../assets/background_dot.png')}
+		source={require('@Assets/background_dot.png')}
 		resizeMode='repeat'
 		style={styles.background}
 	>

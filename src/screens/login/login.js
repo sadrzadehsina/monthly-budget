@@ -1,12 +1,15 @@
 import React, { memo, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-import { Background } from '../components/background';
-import { Logo } from '../components/logo';
-import { Header } from '../components/header';
-import { Button } from '../components/button';
-import { TextInput } from '../components/text-input';
-import { BackButton } from '../components/back-button';
-import { theme } from '../core/theme';
+
+import { theme } from '@Core';
+import {
+	Background,
+	Logo,
+	Header,
+	Button,
+	TextInput,
+	BackButton
+} from '@Components';
 
 const LoginScreen = ({ navigation }) => {
   
