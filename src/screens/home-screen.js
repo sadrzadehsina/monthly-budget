@@ -17,12 +17,7 @@ const HomeScreen = ({ navigation }) => (
       mode="contained"
       onPress={() => navigation.navigate('Login')}
     >
-      Login
-    </Button>
-    <Button
-      mode="outlined"
-    >
-      Sign Up
+      Try It! 
     </Button>
   </Background>
 );
