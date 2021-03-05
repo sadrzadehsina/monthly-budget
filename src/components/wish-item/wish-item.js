@@ -25,7 +25,7 @@ const list = StyleSheet.create({
     marginVertical: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 	budget: {
@@ -35,6 +35,6 @@ const list = StyleSheet.create({
 		alignItems: 'flex-end'
 	},
 	budgetText: {
-		fontSize: 24,
+		fontSize: 18,
 	}
 });

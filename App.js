@@ -9,7 +9,12 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import { HomeScreen, LoginScreen, ConfirmScreen } from '@Screens';
+import { 
+  HomeScreen, 
+  LoginScreen, 
+  ConfirmScreen,
+  DashboardScreen,
+} from '@Screens';
 
 const Stack = createStackNavigator();
 
@@ -17,10 +22,11 @@ const App = () => {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator headerMode="none">
+      <Stack.Navigator headerMode='none' initialRouteName='Dashboard'>
         <Stack.Screen name='Home' component={HomeScreen}/>
         <Stack.Screen name='Login' component={LoginScreen}/>
         <Stack.Screen name='Confirm' component={ConfirmScreen}/>
+        <Stack.Screen name='Dashboard' component={DashboardScreen} />
       </Stack.Navigator>
       
     </NavigationContainer>

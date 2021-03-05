@@ -1,7 +1,13 @@
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import {Text, List, FAB} from 'react-native-paper';
-import {AddWishDialog, WishItem} from '../components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const Wishes = () => {
+import {AddWishDialog, WishItem} from '@Components';
+import { toMoney } from '@Utils';
+
+
+export const DashboardScreen = () => {
 
   const [visible, setVisible] = React.useState(false);
   const [items, setItems] = React.useState([]);
@@ -11,8 +17,12 @@ export const Wishes = () => {
 
   const updateItems = async() => {
 
-    const wishes = await AsyncStorage.getItem('wishes');
-    if (wishes) setItems(JSON.parse(wishes));
+    try {
+      const wishes = await AsyncStorage.getItem('wishes');
+      if (wishes) setItems(JSON.parse(wishes));
+    } catch (error) {
+      console.log('something went wrong', error);
+    }
 
   };
 
@@ -30,10 +40,12 @@ export const Wishes = () => {
 
   }, []);
 
+  const remaining = 50000;
+
   return (
     <View style={styles.root}>
       <List.Section>
-        <List.Subheader style={list.header}>Wish List</List.Subheader>
+        <List.Subheader style={list.header}>Wish List - {toMoney(remaining)}</List.Subheader>
         {
           (items.length === 0) ? (
             <List.Item title='No Available Wish' />
@@ -43,7 +55,7 @@ export const Wishes = () => {
                 key={item.title.toLowerCase().split(' ').join('-')}
                 title={item.title}
                 description={item.description}
-                budget={item.budget}
+                budget={toMoney(item.budget)}
               />
             ))
           )
@@ -70,5 +82,5 @@ const styles = StyleSheet.create({
 const list = StyleSheet.create({
   header: {
     fontSize: 24,
-  },
+  }
 });
