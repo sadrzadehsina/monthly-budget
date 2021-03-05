@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '@Core';
@@ -10,13 +10,22 @@ import {
 	TextInput,
 	BackButton
 } from '@Components';
+import { useAuth } from '@Core/hook';
 
 const LoginScreen = ({ navigation }) => {
   
-  const [phone, setPhone] = useState({ value: '', error: '' });
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [code, setCode] = useState();
 
-  const _onLoginPressed = () => {
-    // do login and redirect to dashboard
+  const { login } = useAuth();
+
+  const loginPressed = async () => {
+    try {
+      await login(phoneNumber);
+      navigation.navigate('Confirm');
+    } catch (error) {
+      console.log('something went wrong', error);
+    }
   };
 
   return (
@@ -30,16 +39,12 @@ const LoginScreen = ({ navigation }) => {
       <TextInput
         label="Phone Number"
         returnKeyType="next"
-        value={phone.value}
-        onChangeText={text => setPhone({ value: text, error: '' })}
-        error={!!phone.error}
-        errorText={phone.error}
-        autoCapitalize="none"
-        textContentType="emailAddress"
+        value={phoneNumber}
+        onChangeText={text => setPhoneNumber(text)}
         keyboardType="phone-pad"
       />
 
-      <Button mode="contained" onPress={_onLoginPressed}>
+      <Button mode="contained" onPress={loginPressed}>
         Login
       </Button>
 

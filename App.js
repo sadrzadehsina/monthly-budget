@@ -9,7 +9,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import { HomeScreen, LoginScreen } from '@Screens';
+import { HomeScreen, LoginScreen, ConfirmScreen } from '@Screens';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +20,7 @@ const App = () => {
       <Stack.Navigator headerMode="none">
         <Stack.Screen name='Home' component={HomeScreen}/>
         <Stack.Screen name='Login' component={LoginScreen}/>
+        <Stack.Screen name='Confirm' component={ConfirmScreen}/>
       </Stack.Navigator>
       
     </NavigationContainer>
