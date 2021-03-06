@@ -7,20 +7,14 @@ export const AuthProvider = ({ children }) => {
 
 	const [verifier, setVerifier] = useState();
 
-	const login = phoneNumber => {
-		
-		return auth.login(phoneNumber).then(setVerifier);
+	const login = phoneNumber => auth.login(phoneNumber).then(setVerifier);
 
-	};
+	const confirm = code => auth.confirm(verifier, code);
 
-	const confirm = code => {
-
-		return auth.confirm(verifier, code);
-
-	};
+	const onAuthStateChanged = callback => auth.onAuthStateChanged(callback);
 
 	return (
-		<AuthContext.Provider value={{ login, confirm }}>
+		<AuthContext.Provider value={{ login, confirm, onAuthStateChanged }}>
 			{children}
 		</AuthContext.Provider>
 	)

@@ -16,7 +16,10 @@ const login = phoneNumber => auth().signInWithPhoneNumber(phoneNumber);
 
 const confirm = (verifier, code) => verifier.confirm(code);
 
+const onAuthStateChanged = callback => auth().onAuthStateChanged(callback);
+
 export {
 	login,
 	confirm,
+	onAuthStateChanged,
 };

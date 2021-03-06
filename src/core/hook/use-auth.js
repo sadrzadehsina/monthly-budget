@@ -8,6 +8,7 @@ export const useAuth = () => {
 	return {
 		login: auth.login,
 		confirm: auth.confirm,
+		onAuthStateChanged: auth.onAuthStateChanged,
 	};
 
 };

@@ -22,7 +22,7 @@ const App = () => {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator headerMode='none' initialRouteName='Dashboard'>
+      <Stack.Navigator headerMode='none' initialRouteName='Home'>
         <Stack.Screen name='Home' component={HomeScreen}/>
         <Stack.Screen name='Login' component={LoginScreen}/>
         <Stack.Screen name='Confirm' component={ConfirmScreen}/>

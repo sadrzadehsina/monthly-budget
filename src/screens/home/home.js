@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import {
   Background,
@@ -10,21 +10,39 @@ import {
 
 import { Text } from 'react-native';
 
-const HomeScreen = ({ navigation }) => (
-  <Background>
-    <Logo />
-    <Header>WISH LIST</Header>
+import { useAuth } from '@Core/hook';
 
-    <Paragraph>
-      The easiest way track your wishes, and of course buy them!
-    </Paragraph>
-    <Button 
-      mode="contained"
-      onPress={() => navigation.navigate('Login')}
-    >
-      Try It! 
-    </Button>
-  </Background>
-);
+const HomeScreen = ({ navigation }) => {
+
+  const [user, setUser] = useState();
+  const { onAuthStateChanged } = useAuth();
+
+  const loginOrGoToDashboard = () => {
+    if (user) navigation.navigate('Dashboard');
+    else navigation.navigate('Login');
+  };
+  
+  useEffect(() => {
+    const subcriber = onAuthStateChanged(setUser);
+    return subcriber;
+  }, []);
+
+  return (
+    <Background>
+      <Logo />
+      <Header>WISH LIST</Header>
+
+      <Paragraph>
+        The easiest way track your wishes, and of course buy them!
+      </Paragraph>
+      <Button 
+        mode="contained"
+        onPress={loginOrGoToDashboard}
+      >
+        Try It! 
+      </Button>
+    </Background>
+  )
+};
 
 export { HomeScreen };
