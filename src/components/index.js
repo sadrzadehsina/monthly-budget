@@ -1,6 +1,8 @@
 export * from './add-wish-dialog';
 export * from './wish-item';
 
+export * from './change-budget-dialog';
+
 export * from './background';
 export * from './back-button';
 export * from './button';

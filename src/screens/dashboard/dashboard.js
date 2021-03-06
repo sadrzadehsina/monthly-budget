@@ -1,23 +1,38 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {Text, List, FAB} from 'react-native-paper';
+import {Text, List, FAB, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AddWishDialog, WishItem} from '@Components';
+import {AddWishDialog, WishItem, ChangeBudgetDialog} from '@Components';
 import { toMoney, uniqueId } from '@Utils';
 
 export const DashboardScreen = () => {
 
   const [visible, setVisible] = React.useState(false);
+  const [visibleBudgetDialog, setVisibleBudgetDialog] = React.useState(false);
+
   const [items, setItems] = React.useState([]);
+  const [budget, setBudget] = React.useState(1000);
 
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
+
+  const showBudgetDialog = () => setVisibleBudgetDialog(true);
+  const hideBudgetDialog = () => setVisibleBudgetDialog(false);
 
   const updateItems = async() => {
     try {
       const wishes = await AsyncStorage.getItem('wishes');
       if (wishes) setItems(JSON.parse(wishes));
+    } catch (error) {
+      console.log('something went wrong', error);
+    }
+  };
+
+  const updateBudget = async() => {
+    try {
+      const budget = await AsyncStorage.getItem('budget');
+      if (budget) setBudget(budget);
     } catch (error) {
       console.log('something went wrong', error);
     }
@@ -37,24 +52,27 @@ export const DashboardScreen = () => {
     updateItems();
   };
 
-  const clear = async() => await AsyncStorage.clear();
+  const changeBudget = async (budget) => {
+    await AsyncStorage.setItem('budget', budget);
+    updateBudget();
+  };
 
   React.useEffect(() => {
-
     updateItems();
-
+    updateBudget();
   }, []);
 
-  const remaining = 1000;
+  const canBuy = remaining => cost => cost <= budget;
 
-  const canBuy = remaining => cost => cost <= remaining;
-
-  const canBuyMore = canBuy(remaining);
+  const canBuyMore = canBuy(budget);
 
   return (
     <View style={styles.root}>
       <List.Section>
-        <List.Subheader style={list.header}>Wish List - {toMoney(remaining)}</List.Subheader>
+        <List.Subheader style={list.header}>
+          Wish List - {toMoney(budget)} 
+          <Button icon="credit-card-plus-outline" compact mode='text' onPress={() => showBudgetDialog()} />
+        </List.Subheader>
         {
           (items.length === 0) ? (
             <List.Item title='No Available Wish' />
@@ -75,6 +93,7 @@ export const DashboardScreen = () => {
       </List.Section>
       <FAB style={styles.fab} small icon="plus" onPress={() => showDialog()} />
       <AddWishDialog hideDialog={hideDialog} add={add} visible={visible} />
+      <ChangeBudgetDialog hideDialog={hideBudgetDialog} update={changeBudget} visible={visibleBudgetDialog} />
     </View>
   );
 };
@@ -94,5 +113,5 @@ const styles = StyleSheet.create({
 const list = StyleSheet.create({
   header: {
     fontSize: 24,
-  }
+  },
 });
