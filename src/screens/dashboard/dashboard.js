@@ -15,14 +15,12 @@ export const DashboardScreen = () => {
   const hideDialog = () => setVisible(false);
 
   const updateItems = async() => {
-
     try {
       const wishes = await AsyncStorage.getItem('wishes');
       if (wishes) setItems(JSON.parse(wishes));
     } catch (error) {
       console.log('something went wrong', error);
     }
-
   };
 
   const add = async ({title, budget}) => {
@@ -47,7 +45,11 @@ export const DashboardScreen = () => {
 
   }, []);
 
-  const remaining = 50000;
+  const remaining = 1000;
+
+  const canBuy = remaining => cost => cost <= remaining;
+
+  const canBuyMore = canBuy(remaining);
 
   return (
     <View style={styles.root}>
@@ -65,6 +67,7 @@ export const DashboardScreen = () => {
                 description={item.description}
                 budget={toMoney(item.budget)}
                 remove={remove}
+                canBuy={canBuyMore(item.budget)}
               />
             ))
           )

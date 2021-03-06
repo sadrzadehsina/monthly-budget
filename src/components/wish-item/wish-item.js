@@ -18,13 +18,13 @@ const ListItemRight = ({ budget }) => {
 	)
 };
 
-export const WishItem = ({ id, title, description, budget, remove }) => {
+export const WishItem = ({ id, title, description, budget, remove, canBuy }) => {
 
 	return (
 		<List.Item
 			title={title}
 			description={description}
-			style={list.item}
+			style={canBuy ? list.itemCanBuy : list.item}
 			titleStyle={list.title}
 			left={() => <ListItemLeft id={id} remove={remove} />}
 			right={() => <ListItemRight budget={budget} />}
@@ -41,6 +41,10 @@ const list = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     marginVertical: 5,
   },
+	itemCanBuy: {
+		backgroundColor: '#DCEDC8',
+		marginVertical: 5,
+	},
   title: {
     fontSize: 18,
     fontWeight: 'bold',

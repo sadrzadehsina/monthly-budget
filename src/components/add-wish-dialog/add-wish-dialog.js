@@ -6,19 +6,38 @@ import {
 	Dialog, 
 	Text, 
 	TextInput, 
-	Button
+	Button,
+  HelperText
 } from 'react-native-paper';
 
 export const AddWishDialog = ({ hideDialog, add, visible }) => {
+
   const [title, setTitle] = React.useState('');
   const [budget, setBudget] = React.useState('');
+  const [hasError, setHasError] = React.useState(false);
 
   const containerStyle = {backgroundColor: 'white', padding: 20};
 	
+  const reset = () => {
+    setTitle('');
+    setBudget('');
+    setHasError(false);
+  };
+
 	const hideAndAdd = () => {
+    if (title === '' || budget === '') {
+      setHasError(true);
+      return;
+    };
 		add({ title, budget });
+    reset();
 		hideDialog();
 	};
+
+  const hide = () => {
+    reset();
+    hideDialog();
+  };
 
   return (
     <Portal>
@@ -38,9 +57,13 @@ export const AddWishDialog = ({ hideDialog, add, visible }) => {
             value={budget}
             onChangeText={(text) => setBudget(text)}
           />
+          <HelperText type="error" visible={hasError}>
+            Both title and budget are required
+          </HelperText>
         </Dialog.Content>
 				<Dialog.Actions>
-					<Button onPress={hideAndAdd}>Done</Button>
+          <Button onPress={hide}>Cancel</Button>
+					<Button onPress={hideAndAdd}>Add</Button>
 				</Dialog.Actions>
       </Dialog>
     </Portal>
