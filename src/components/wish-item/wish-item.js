@@ -1,8 +1,24 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { List, Text } from 'react-native-paper';
+import { List, Text, Button } from 'react-native-paper';
 
-export const WishItem = ({ title, description, budget }) => {
+const ListItemLeft = ({ id, remove }) => {
+	return (
+		<View style={list.action}>
+			<Button icon='trash-can-outline' mode='text' compact onPress={() => remove(id)} />
+		</View>
+	);
+};
+
+const ListItemRight = ({ budget }) => {
+	return (
+		<View style={list.budget}>
+			<Text style={list.budgetText}>{budget}</Text>
+		</View>
+	)
+};
+
+export const WishItem = ({ id, title, description, budget, remove }) => {
 
 	return (
 		<List.Item
@@ -10,7 +26,8 @@ export const WishItem = ({ title, description, budget }) => {
 			description={description}
 			style={list.item}
 			titleStyle={list.title}
-			right={() => <View style={list.budget}><Text style={list.budgetText}>{budget}</Text></View>}
+			left={() => <ListItemLeft id={id} remove={remove} />}
+			right={() => <ListItemRight budget={budget} />}
 		/>
 	);
 
@@ -29,12 +46,12 @@ const list = StyleSheet.create({
     fontWeight: 'bold',
   },
 	budget: {
-		flex: 1,
 		justifyContent: 'center',
-		alignContent: 'flex-end',
-		alignItems: 'flex-end'
 	},
 	budgetText: {
 		fontSize: 18,
+	},
+	action: {
+		justifyContent: 'center'	
 	}
 });

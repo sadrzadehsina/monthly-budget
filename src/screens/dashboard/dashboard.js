@@ -4,8 +4,7 @@ import {Text, List, FAB} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AddWishDialog, WishItem} from '@Components';
-import { toMoney } from '@Utils';
-
+import { toMoney, uniqueId } from '@Utils';
 
 export const DashboardScreen = () => {
 
@@ -27,12 +26,20 @@ export const DashboardScreen = () => {
   };
 
   const add = async ({title, budget}) => {
-    // save to async storage
-    const wish = { title, budget };
+    const wish = { id: uniqueId(), title, budget };
     const newWishes = [ ...items, wish ];
     await AsyncStorage.setItem('wishes', JSON.stringify(newWishes));
     updateItems();
   };
+
+  const remove = async (id) => {
+    const wishes = await AsyncStorage.getItem('wishes');
+    const remainingWishes = JSON.parse(wishes).filter(item => item.id !== id);
+    await AsyncStorage.setItem('wishes', JSON.stringify(remainingWishes));
+    updateItems();
+  };
+
+  const clear = async() => await AsyncStorage.clear();
 
   React.useEffect(() => {
 
@@ -52,10 +59,12 @@ export const DashboardScreen = () => {
           ) : (
             items.map(item => (
               <WishItem 
-                key={item.title.toLowerCase().split(' ').join('-')}
+                key={item.id}
+                id={item.id}
                 title={item.title}
                 description={item.description}
                 budget={toMoney(item.budget)}
+                remove={remove}
               />
             ))
           )

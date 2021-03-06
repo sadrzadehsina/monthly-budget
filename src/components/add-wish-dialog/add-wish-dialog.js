@@ -11,7 +11,7 @@ import {
 
 export const AddWishDialog = ({ hideDialog, add, visible }) => {
   const [title, setTitle] = React.useState('');
-  const [budget, setBudget] = React.useState(0);
+  const [budget, setBudget] = React.useState('');
 
   const containerStyle = {backgroundColor: 'white', padding: 20};
 	
@@ -26,12 +26,14 @@ export const AddWishDialog = ({ hideDialog, add, visible }) => {
         <Dialog.Title>Add New Wish</Dialog.Title>
         <Dialog.Content>
           <TextInput
+            keyboardType="default"
             label="Title"
             value={title}
 						style={styles.input}
             onChangeText={(text) => setTitle(text)}
           />
           <TextInput
+            keyboardType="number-pad"
             label="Budget"
             value={budget}
             onChangeText={(text) => setBudget(text)}
