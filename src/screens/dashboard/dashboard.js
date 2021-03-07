@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {Text, List, FAB, Button} from 'react-native-paper';
+import {Text, List, FAB, Button, Appbar, Card, Paragraph} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {AddWishDialog, WishItem, ChangeBudgetDialog} from '@Components';
@@ -68,11 +68,21 @@ export const DashboardScreen = () => {
 
   return (
     <View style={styles.root}>
-      <List.Section>
-        <List.Subheader style={list.header}>
-          Wish List - {toMoney(budget)} 
-          <Button icon="credit-card-plus-outline" compact mode='text' onPress={() => showBudgetDialog()} />
-        </List.Subheader>
+    
+      <Appbar.Header>
+        <Appbar.Content title="Wish List" />
+      </Appbar.Header>
+
+      <Card>
+        <Card.Content>
+          <Paragraph>You have <Text style={styles.budget}>{toMoney(budget)}</Text> in your wallet. Below is a list of your wishes. Those you can buy now is marked as green.</Paragraph>
+        </Card.Content>
+        <Card.Actions>
+          <Button onPress={() => showBudgetDialog(true)}>Update</Button>
+        </Card.Actions>
+      </Card>
+
+      <List.Section> 
         {
           (items.length === 0) ? (
             <List.Item title='No Available Wish' />
@@ -91,6 +101,7 @@ export const DashboardScreen = () => {
           )
         }
       </List.Section>
+
       <FAB style={styles.fab} small icon="plus" onPress={() => showDialog()} />
       <AddWishDialog hideDialog={hideDialog} add={add} visible={visible} />
       <ChangeBudgetDialog hideDialog={hideBudgetDialog} update={changeBudget} visible={visibleBudgetDialog} />
@@ -108,6 +119,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  budget: {
+    fontWeight: 'bold',
+  }
 });
 
 const list = StyleSheet.create({

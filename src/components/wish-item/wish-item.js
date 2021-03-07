@@ -38,12 +38,28 @@ const list = StyleSheet.create({
 		fontSize: 24,
 	},
   item: {
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#f8f8f8',
     marginVertical: 5,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		elevation: 5,
   },
 	itemCanBuy: {
 		backgroundColor: '#DCEDC8',
 		marginVertical: 5,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		elevation: 5,
 	},
   title: {
     fontSize: 18,
