@@ -1,22 +1,12 @@
 import auth from '@react-native-firebase/auth';
 
+const _auth = auth();
 
-/*
-	Example:
+const login = phoneNumber => _auth.signInWithPhoneNumber(phoneNumber);
 
-		signInWithPhoneNumber('+989133235460')
-			.then(verifier => setVerifier(verifier))
-
-		a few line later ...
-
-		verifier.confirm('123456')
-
-*/
-const login = phoneNumber => auth().signInWithPhoneNumber(phoneNumber);
+const onAuthStateChanged = callback => _auth.onAuthStateChanged(callback);
 
 const confirm = (verifier, code) => verifier.confirm(code);
-
-const onAuthStateChanged = callback => auth().onAuthStateChanged(callback);
 
 export {
 	login,
